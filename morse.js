@@ -3,10 +3,20 @@ var Morse = function(dot){
 	this.time = "";
 	this.dot = !!dot ? dot : 200;
 
+	this.isLetterSeperator = function(input) {
+		return input == ' ';
+	}
+
+	this.isWordSeperator = function(input) {
+		return input == '/';
+	}
+
 	this.feed = function(input) {
-		if(this.input_buffer[this.input_buffer.length-1] == ' ' && input == '/')
+		if(this.isLetterSeperator(this.input_buffer[this.input_buffer.length-1]) 
+			&& this.isWordSeperator(input))
 		{
-			this.input_buffer[this.input_buffer.length-1] = '/';
+			this.input_buffer = this.input_buffer.substring(0, this.input_buffer.length-1);
+			this.input_buffer += '/';
 		}
 		else
 		{
@@ -14,32 +24,63 @@ var Morse = function(dot){
 		}
 	};
 
-	this.out = function(flash) {
-		var inputs_word = this.input_buffer.split('/');
+	this.out = function(flush) {
+		var input_words = this.getWords(this.input_buffer); 
 		var result = "";
 
-		for(i in inputs_word) {
-			var inputs_alpha = inputs_word[i].split(' ');
-			for(j in inputs_alpha) {
-				if(inputs_alpha[j] == ''){ continue; }
-				result += Morse.get(inputs_alpha[j]);
-			}
+		try {
+			for(i in input_words) {
+				var input_letters = this.getLetters(input_words[i]);
+				for(j in input_letters) {
+					result += Morse.get(input_letters[j]);
+				}
 
-			if(i != inputs_word.length-1) {
-				result += ' ';
+				if(i != input_words.length-1) {
+					result += ' ';
+				}
 			}
+		} catch (e) {
+			this.error_handler(e);
 		}
 
-		if(!!flash) {
-			this.input_buffer = "";
+		if(!!flush) {
+			this.flush();
 		}
 
 		return !!result ? result : "";
 	};
 
+	this.getWords = function(input) {
+		var result = new Array();
+		var item = $.trim(input).split('/');
+		for(i in item) {
+			if(item[i] == "") continue;
+			result.push(item[i]);
+		}
+		return result;
+	}
+
+	this.getLetters = function(input) {
+		return $.trim(input).split(' ');
+	}
+
+	this.getLastLetter = function(input) {
+		var letters = this.getLetters(this.getLastWord(input));
+		return letters[letters.length - 1];
+	}
+	this.getLastWord = function(input) {
+		var words = this.getWords(input);
+		return words[words.length - 1];
+	}
+
+	this.flush = function() {
+		this.input_buffer = "";
+	}
+
 	this.input_handler = function(){ };
-	this.alpha_handler = function(){ };
-	this.word_handler = function(){ console.log(this.out()); };
+	this.letter_handler = function(){ };
+	this.word_handler = function(){ };
+	this.error_handler = function(e) { console.log(e); }
 
 	// there are chaos;
 	this.handler = function() {
@@ -73,10 +114,13 @@ var Morse = function(dot){
 				}
 				diff = start = end = 0;
 
-				this_.input_handler(input);
 				this_.feed(input);
-				alphabet_timeout_obj = setTimeout(function() { this_.feed(' '); this_.alpha_handler(); }, dot*3);
-				word_timeout_obj = setTimeout(function() { this_.feed('/'); this_.word_handler();}, dot*7);
+				this_.input_handler(input);
+				alphabet_timeout_obj = setTimeout(function() { 
+					this_.feed(' '); 
+					this_.letter_handler(this_.getLastLetter(this_.input_buffer));
+				}, dot*3);
+				word_timeout_obj = setTimeout(function() { this_.feed('/'); this_.word_handler(this_.getLastWord(this_.input_buffer));}, dot*7);
 			}
 		};
 	};

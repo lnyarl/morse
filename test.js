@@ -1,6 +1,6 @@
 var assert = function(expected, actual, message) {
 	if(expected != actual) {
-		var message = 'it must be ' + expected + ' but ' + actual + (!!message ? ' : ' + message : '');
+		var message = 'it must be "' + expected + '" but "' + actual + '"' + (!!message ? ' : ' + message : '');
 		var err = new Error(message).stack.split('\n');
 		var err_filter = new Array();
 		for(i in err) {

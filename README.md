@@ -29,7 +29,8 @@
 	$(document).ready(function(){
 		var morse = new Morse();
 		
-		morse.bind($('#input'));
+		var handler = morse.getHandler();
+		$('#input').keydown(handler.on).keyup(handler.off);
 	});
 
 이제 html파일을 열어 textarea를 클릭해 포커스를 주고 아무키나 눌러보자. 길게도 누르고 있다가 떼도 되고 짧게 누르고 있다가 떼도 된다. 콘솔창을 보면 자신이 누른 것이 출력되는 것을 볼 수 있다. 만약 'dot'의 길이를 바꾸고 싶다면 생성자에 ms단위의 시간을 인자로 넘기면 된다.
@@ -42,7 +43,7 @@
 
 ### contructor
 
-#### **Morse()**
+#### Morse()
 
 기본 생성자. 'dot'은 200 ms 이다.
 
@@ -50,7 +51,7 @@
 
 	var morse = new Morse();
 
-#### **Morse(duration)**
+#### Morse(duration)
 
 'dot'의 길이를 인자로 받는 생성자.
 
@@ -67,7 +68,9 @@
 
 ### method
 
-#### **feed(input)**
+#### feed(input)
+
+내부 입력 버퍼에 입력을 쌓는다.
 
 사용법:
 
@@ -94,9 +97,12 @@
 	morse.feed('-');
 	assert(morse.out(true) == 'aa a');
 	
-#### **out(flush)**
+#### out(flush)
+
+내부 입력 버퍼에 쌓인 데이터를 파싱해 모스기호를 문자로 변환한다. 인자로 들어오는 flush가 true이면 입력 버퍼를 초기화 한다.
 
 사용법:
+
 	var morse = new Morse();
 	
 	morse.feed('.');
@@ -113,11 +119,27 @@
 	morse.feed('-');
 	assert(morse.out() == 'a');
 
+#### getHandler()
+
+모스 기호를 만들어내는데 사용되는 핸들러를 가져온다. 사용되는 핸들러는 on, off이다. 보통 keydown 이벤트에 on을, keyup 이벤트에 off를 매핑 시켜서 사용한다.
+
+사용법:
+
+	var morse = new Morse();
+	var handler = morse.getHandler();
+	$('#input').keydown(handler.on)
+		.keyup(handler.off);
+
+#### flush()
+
+내부 입력 버퍼를 초기화한다.
+
 ### static method
 
 #### Morse.get(code)
 
 사용법:
+
 	assert(Morse.get('.-') == 'a');
 	assert(Morse.get('--.-') == 'q');
 	Morse.get('............') // error
@@ -128,10 +150,7 @@
 
 ## To do
 
-* Jquery 걷어내기 : DOM 선택과 trim에서만 사용한다.
-* textarea에서 사용자가 타이핑하는 값을 출력하지 않기 : 보기에 지저분하다.
 * 한글, 기호, 숫자 지원
-* 파싱 모듈과 입력 모듈의 분리 : 이게 합쳐져 있는건 설계미스ㅠㅠ)
 
 ## Reference
 

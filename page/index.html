@@ -28,26 +28,45 @@
   <!-- All JavaScript at the bottom, except this Modernizr build.
        Modernizr enables HTML5 elements & feature detects for optimal performance.
        Create your own custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="js/libs/modernizr-2.5.3.min.js"></script>
+  <script src="./js/libs/modernizr-2.5.3.min.js"></script>
 </head>
 <body>
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
-    MORSE CODE
+    <h1>MORSE CODE</h1>
   </header>
-  <div role="main">
-    <section id="intro">
-	 	
-	 </section>
+  <div role="main" id="main">
     <section id="play">
-		 <div id="input" contentEditable="true"></div>
-		 <div id="result"></div>
-		 <div id="suggest"></div>
-	 </section>
+	  <h2>Play</h2>
+      <div id="input" contentEditable="true"></div>
+      <div id="result"></div>
+      <div id="suggest"></div>
+    </section>
     <section id="morse-code">
-	 </section>
+	  <h2>Code Table</h2>
+	  <table id="code-table">
+        <thead>
+          <tr>
+            <th class="letter">글자</th>
+            <th class="code">부호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="invisible template">
+            <td class="letter"> </td>
+            <td class="code"> </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="intro">
+		<h2>Introduction</h2>
+		<article>
+		  <img src="https://a248.e.akamai.net/camo.github.com/d00d446ef0808267317ad78bb08f094fc473edbf/687474703a2f2f64697374696c6c657279696d616765362e696e7374616772616d2e636f6d2f37303933333361323863393331316531626536613132333133383230343535645f372e6a7067" class="morse-pic"/>
+		</article>
+	</section>
   </div>
   <footer>
     powerd by weaveus
@@ -57,7 +76,7 @@
   <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
   <!-- scripts concatenated and minified via build script -->
@@ -69,10 +88,12 @@
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
   <script>
+  /*
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
+	*/
   </script>
 </body>
 </html>

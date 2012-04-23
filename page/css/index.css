@@ -1,0 +1,23 @@
+#input {
+	width:100px;
+	height:25pt;
+	font-size:17pt;
+	border:1px solid #000;
+	margin:10px auto;
+	overflow:hidden;
+}
+
+#result {
+	width:100%;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #ccc;
+	margin:0px auto;
+}
+
+header {
+	text-align:center;
+}
+
+footer {
+	text-align:center;
+}

@@ -6,10 +6,20 @@ $(document).ready(function(){
 	var morse = new Morse(150);
 	var input_element = $('#input');
 	var result_element = $('#result');
+	var table = $('#code-table');
 
 	morse.setMorseKey(32);
 	morse.input_handler = function(input){ 
+		input_element.css('border', '1px solid #000');
 		input_element.text(input_element.text() + input); 
+		table.find('.selected').removeClass('selected');
+		table.find('.correct').removeClass('correct');
+		var suggest = Morse.suggest(input_element.text());
+		var correct = Morse.get(input_element.text());
+		for(i in suggest) {
+			table.find('.' + suggest[i]).addClass('selected');
+		}
+		table.find('.' + correct).addClass('correct').removeClass('selected');
 	};
 
 	morse.letter_handler = function(input){ 
@@ -20,6 +30,11 @@ $(document).ready(function(){
 
 	morse.word_handler = function(input){ 
 		result_element.append(' '); 
+	};
+
+	morse.error_handler = function(input){ 
+		input_element.css('border', '2px solid #ff0000');
+		setTimeout(function(){ input_element.css('border', '1px solid #000'); }, 3000);
 	};
 
 	var handler = morse.getHandler();
@@ -45,8 +60,8 @@ function make_code_table(code_list) {
 	}
 	for(i in code_list) {
 		var record = template.clone();
-		record.find('.letter').text(code_list[i]);
-		record.find('.code').text(i);
+		record.find('.letter').text(code_list[i]).addClass(code_list[i]);
+		record.find('.code').text(i).addClass(code_list[i]);
 
 		if(j < max_row) {
 			append(record);

@@ -110,3 +110,12 @@ section article {
 	width:50%;
 	margin:0px auto;
 }
+
+.selected {
+	background:#9F0022;
+	color:#fff;
+}
+.correct {
+	background:#349500;
+	color:#fff;
+}

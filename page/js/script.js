@@ -3,7 +3,8 @@
 */
 
 $(document).ready(function(){
-	var morse = new Morse(150);
+	var default_dot_duration = 150;
+	var morse = new Morse(default_dot_duration);
 	var input_element = $('#input');
 	var result_element = $('#result');
 	var table = $('#code-table');
@@ -15,11 +16,19 @@ $(document).ready(function(){
 		table.find('.selected').removeClass('selected');
 		table.find('.correct').removeClass('correct');
 		var suggest = Morse.suggest(input_element.text());
-		var correct = Morse.get(input_element.text());
+		var correct = '';
+		try {
+			 correct = Morse.get(input_element.text());
+		}
+		catch (e){
+		}
 		for(i in suggest) {
 			table.find('.' + suggest[i]).addClass('selected');
 		}
-		table.find('.' + correct).addClass('correct').removeClass('selected');
+
+		if(!!correct) {
+			table.find('.' + correct).addClass('correct').removeClass('selected');
+		}
 	};
 
 	morse.letter_handler = function(input){ 
@@ -40,7 +49,26 @@ $(document).ready(function(){
 	var handler = morse.getHandler();
 	$('#input').keydown(handler.on).keyup(handler.off);
 
+	$(function() {
+		$( "#slider" ).slider({
+			min:50,
+			max:1000,
+			value:default_dot_duration,
+			step: 10,
+			slide: function( event, ui ) {
+				$( "#slider-value" ).text( ui.value + " ms" );
+			},
+			change: function () {
+				$( "#slider-value" ).text( ui.value + " ms" );
+				morse.setDotDuration(ui.value);
+			}
+		});
+	});
+	$( "#slider-value" ).text( default_dot_duration + " ms"  );
+
 	make_code_table(Morse.table);
+
+	input_element.focus();
 });
 
 function make_code_table(code_list) {

@@ -20,6 +20,7 @@
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
+  <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.8.19.custom.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/index.css">
 
@@ -35,17 +36,22 @@
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
-    <h1>MORSE CODE</h1>
+    <div id="logo">
+	   <img src="img/logo.png" />
+	 </div>
+	 <h1>MORSE CODE</h1>
   </header>
   <div role="main" id="main">
+	 <h2>Play</h2>
     <section id="play">
-	  <h2>Play</h2>
+	  <div style="text-align:center; margin:0px auto;">(press space bar)</div>
       <div id="input" contentEditable="true"></div>
       <div id="result"></div>
-      <div id="suggest"></div>
+		<div id="slider"></div>
+		<div id="slider-value"></div>
     </section>
+	 <h2>Code Table</h2>
     <section id="morse-code">
-	  <h2>Code Table</h2>
 	  <table id="code-table">
         <thead>
           <tr>
@@ -78,6 +84,7 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  <script src="js/libs/jquery-ui-1.8.19.custom.min.js"></script>
 
   <!-- scripts concatenated and minified via build script -->
   <script src="js/plugins.js"></script>

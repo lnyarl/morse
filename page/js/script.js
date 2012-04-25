@@ -78,7 +78,7 @@ function make_code_table(code_list) {
 	$('.template').remove();
 
 	var j = 1;
-	var max_row = 9;
+	var max_row = 13;
 	var append = function(record) {
 		if(table.find('tr').length < j) {
 			table.append(record);

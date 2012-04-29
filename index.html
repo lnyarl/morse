@@ -46,7 +46,15 @@
     <section id="play">
 	  <div style="text-align:center; margin:0px auto;">(press space bar)</div>
 	  <div id="input-buffer" class="invisible"></div>
+
+      <!-- tweet this -->
+	  <div id="tweet-button">
+        <a href="https://twitter.com/share" id="twitter-share-button-morse" data-count="none" class="twitter-share-button" data-lang="en">Tweet</a>
+        <script>maketweet = function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}; maketweet(document,"script","twitter-wjs")</script>
+      </div>
+
       <div id="input"><span id="cursor">&nbsp;</span></div>
+	  <div id="input-code" class="invisible"></div>
 
       <div id="result"></div>
 		<div id="slider"></div>

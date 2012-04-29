@@ -1,4 +1,4 @@
-/* Author:
+/* Author: Yongjae Choi
 
 */
 
@@ -6,22 +6,29 @@ $(document).ready(function(){
 	var default_dot_duration = 150;
 	var morse = new Morse(default_dot_duration);
 	var input_element = $('#input');
+	var buffer_element = $('#input-buffer');
 	var result_element = $('#result');
 	var table = $('#code-table');
+	var cursor = $('#cursor');
+
+	var append = function(l) {
+	}
 
 	morse.setMorseKey(32);
 	morse.input_handler = function(input){ 
 		input_element.css('border', '1px solid #000');
-		input_element.text(input_element.text() + input); 
-		table.find('.selected').removeClass('selected');
-		table.find('.correct').removeClass('correct');
-		var suggest = Morse.suggest(input_element.text());
+		cursor.before(input); 
+		buffer_element.append(input); 
+		var suggest = Morse.suggest(buffer_element.text());
 		var correct = '';
 		try {
-			 correct = Morse.get(input_element.text());
+			 correct = Morse.get(buffer_element.text());
 		}
 		catch (e){
 		}
+
+		table.find('.selected').removeClass('selected');
+		table.find('.correct').removeClass('correct');
 		for(i in suggest) {
 			table.find('.' + suggest[i]).addClass('selected');
 		}
@@ -29,25 +36,38 @@ $(document).ready(function(){
 		if(!!correct) {
 			table.find('.' + correct).addClass('correct').removeClass('selected');
 		}
+		return false;
 	};
 
 	morse.letter_handler = function(input){ 
 		if(!input) return;
-		input_element.text("");
-		result_element.append(morse.out(true)); 
+		var text = input_element.text();
+		text = text.substr(0, text.length - 1);
+		input_element.text('');
+		//cursor.remove();
+		try {
+			var letter = Morse.get(input);
+			input_element.append(text.substr(0, text.length - input.length ) + letter);
+		} catch (e) {
+			input_element.css('border', '2px solid #ff0000');
+			input_element.append(text.substr(0, text.length - input.length ));
+			setTimeout(function(){ input_element.css('border', '1px solid #000'); }, 3000);
+		}
+		//result_element.append(morse.out(true)); 
+		buffer_element.text('');
+		input_element.append(cursor);
 	};
 
 	morse.word_handler = function(input){ 
-		result_element.append(' '); 
-	};
-
-	morse.error_handler = function(input){ 
-		input_element.css('border', '2px solid #ff0000');
-		setTimeout(function(){ input_element.css('border', '1px solid #000'); }, 3000);
+		//result_element.append(' '); 
+		cursor.before(" ");
+		buffer_element.text('');
 	};
 
 	var handler = morse.getHandler();
-	$('#input').keydown(handler.on).keyup(handler.off);
+	$(document).keydown(handler.on).keyup(handler.off);
+
+	var blink = blinkCursor(default_dot_duration);
 
 	$(function() {
 		$( "#slider" ).slider({
@@ -58,18 +78,27 @@ $(document).ready(function(){
 			slide: function( event, ui ) {
 				$( "#slider-value" ).text( ui.value + " ms" );
 			},
-			change: function () {
+			change: function (event, ui) {
 				$( "#slider-value" ).text( ui.value + " ms" );
 				morse.setDotDuration(ui.value);
+				clearInterval(blink);
+				blink = blinkCursor(ui.value);
 			}
 		});
 	});
 	$( "#slider-value" ).text( default_dot_duration + " ms"  );
 
-	make_code_table(Morse.table);
 
-	input_element.focus();
+	make_code_table(Morse.table);
 });
+
+function blinkCursor(dot_duration) {
+	return setInterval(function (){
+		var cursor = $('#cursor');
+
+		cursor.toggleClass('invisible');
+	}, dot_duration);
+}
 
 function make_code_table(code_list) {
 	var template = $('.template').clone().removeClass('template').removeClass('invisible');

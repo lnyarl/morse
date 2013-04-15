@@ -1,3 +1,6 @@
+/**
+ * unused
+ */
 Morse.suggest = function(code) {
 	var result = new Array();
 	for(i in Morse.table) {

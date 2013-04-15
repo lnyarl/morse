@@ -1,41 +1,52 @@
-var StateMachine = require('./core.js').StateMachine;
+var Automata = require('./automata.js').Automata;
 
 /**
- * Morse use StateMachine. Morse has Morse Code Table. It parsed by StateMachine.
+ * Morse use Automata. Morse has Morse Code Table. It parsed by Automata.
  * Morse knows that just letter and word.
  * ref : test/testcase.js
  */
 var Morse = function(option) {
-  this.statemachine = new StateMachine();
+  this.automata = new Automata();
 	this.inputBuffer = "";
   option = option || {};
 
   this.dot = option.dot || '.';
   this.dash = option.dash || '-';
 
-  this.statemachine.parse(Morse.table);
+  this.automata.parse(Morse.table);
+
+  this.decode = function(str){
+    var result = "";
+
+    for(var i = 0; i < str.length; i++){
+      result += this.input(str[i]);
+    }
+    result += this.automata.flush();
+
+    return result;
+  };
 
 	this.input = function(input) {
 		if(this.isLetterSeperator(input)) {
-      return this.statemachine.flush();
+      return this.automata.flush();
     } else if(this.isWordSeperator(input)) {
-      return this.statemachine.flush() + ' ';
+      return this.automata.flush() + ' ';
     } else {
-      this.statemachine.input(input);
+      this.automata.input(input);
       return '';
 		}
 	};
 
 	this.isLetterSeperator = function(input) {
-		return input == '/';
-	};
-
-	this.isWordSeperator = function(input) {
 		return input == ' ';
 	};
 
+	this.isWordSeperator = function(input) {
+		return input == '/';
+	};
+
 	this.reset = function() {
-		this.statemachine.flush();
+		this.automata.flush();
 	};
 };
 

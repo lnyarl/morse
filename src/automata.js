@@ -1,12 +1,12 @@
 /**
- * StateMachine build for parsing automata.
+ * Automata build for parsing automata.
  * This automata recogenize not only morse code also xxx code.(I don't know word to call, kind of this)
  */
-exports.StateMachine = (function(){
+exports.Automata = (function(){
   /**
-   * class StateMachine
+   * class Automata
    */
-  var StateMachine = function() {
+  var Automata = function() {
     this.currentState = this.rootState = new State();
     this.afterInput = [];
     this.afterUninput = [];
@@ -93,6 +93,6 @@ exports.StateMachine = (function(){
 
   };
 
-  return StateMachine;
+  return Automata;
 })();
 

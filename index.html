@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <link rel="stylesheet" href="page/css/ui-lightness/jquery-ui-1.8.19.custom.css">
+  <link rel="stylesheet" href="page/css/style.css">
+  <link rel="stylesheet" href="page/css/index.css">
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  <!-- All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="page/js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header>
+    <div id="logo">
+	   <img src="page/img/logo.png" />
+	 </div>
+	 <h1>MORSE CODE</h1>
+  </header>
+  <div role="main" id="main">
+	 <h2>Play</h2>
+    <section id="play">
+	  <div style="text-align:center; margin:0px auto;">(press space bar)</div>
+	  <div id="input-buffer" class="invisible"></div>
+
+      <!-- tweet this -->
+	  <div id="tweet-button">
+        <a href="https://twitter.com/share" id="twitter-share-button-morse" data-count="none" class="twitter-share-button" data-lang="en">Tweet</a>
+        <script>maketweet = function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}; maketweet(document,"script","twitter-wjs")</script>
+      </div>
+
+      <div id="input"><span id="cursor">&nbsp;</span></div>
+	  <div id="input-code" class="invisible"></div>
+
+      <div id="result"></div>
+		<div id="slider"></div>
+		<div id="slider-value"></div>
+    </section>
+	 <h2>Code Table</h2>
+    <section id="morse-code">
+	  <table id="code-table">
+        <thead>
+          <tr>
+            <th class="letter">글자</th>
+            <th class="code">부호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="invisible template">
+            <td class="letter"> </td>
+            <td class="code"> </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="intro">
+		<!--<h2>Introduction</h2>-->
+		<article>
+		  <img src="https://a248.e.akamai.net/camo.github.com/d00d446ef0808267317ad78bb08f094fc473edbf/687474703a2f2f64697374696c6c657279696d616765362e696e7374616772616d2e636f6d2f37303933333361323863393331316531626536613132333133383230343535645f372e6a7067" class="morse-pic"/>
+		</article>
+	</section>
+  </div>
+  <footer>
+    powerd by mage 
+  </footer>
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="page/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  <script src="page/js/libs/jquery-ui-1.8.19.custom.min.js"></script>
+  <script src="lib/morse.js"></script>
+
+  <!-- scripts concatenated and minified via build script -->
+  <script src="page/js/plugins.js"></script>
+  <script src="page/js/script.js"></script>
+  <!-- end scripts -->
+
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1902956-6']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+
